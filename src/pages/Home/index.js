@@ -11,9 +11,11 @@ import Icon from "../../components/Icon";
 import Form from "../../containers/Form";
 import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
+import ModalEvent from "../../containers/ModalEvent";
 
 const Page = () => {
-  const {last} = useData()
+  const { data } = useData(); // pour obtenir les données
+  const last = data?.events?.[data.events.length - 1]; // verifie si data + events existent
   return <>
     <header>
       <Menu />
@@ -35,7 +37,7 @@ const Page = () => {
           </ServiceCard>
           <ServiceCard imageSrc="/images/hall-expo.png">
             <h3>Conférences</h3>
-            724 events vous propose d’organiser votre évènement, quelle que soit
+            77 events vous propose d’organiser votre évènement, quelle que soit
             sa taille, en s’adaptant à votre demande et à vos demandes. En tant
             que spécialistes de l’évènementiel, nous saurons trouver le lieu
             parfait ainsi que des solutions inédites pour capter votre audience
@@ -114,21 +116,32 @@ const Page = () => {
       </div>
     </main>
     <footer className="row">
+
       <div className="col presta">
-        <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
+        <h3>Notre dernière prestation</h3>
+        {last && (
+          <Modal Content={<ModalEvent event={last} />}>
+            {({ setIsOpened }) => (
+              <EventCard
+                onClick={() => setIsOpened(true)}
+                imageSrc={last.cover}
+                title={last.title}
+                date={new Date(last.date)}
+                label="boom"
+                className="EventCard EventCard--small"
+              />
+            )}
+          </Modal>
+        )}
       </div>
+
+
+
       <div className="col contact">
         <h3>Contactez-nous</h3>
         <address>45 avenue de la République, 75000 Paris</address>
         <div>01 23 45 67 89</div>
-        <div>contact@724events.com</div>
+        <div>contact@77events.com</div>
         <div>
           <a href="#twitch">
             <Icon name="twitch" />

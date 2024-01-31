@@ -1,21 +1,29 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
 
-const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000); })
+const mockContactApi = () =>
+  new Promise((resolve) => {
+    setTimeout(resolve, 900);
+  });
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
+  const formRef = useRef(null);
+
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
       setSending(true);
+
       // We try to call mockContactApi
       try {
         await mockContactApi();
         setSending(false);
+        onSuccess();
+        formRef.current.reset(); // Réinitialiser le formulaire
       } catch (err) {
         setSending(false);
         onError(err);
@@ -23,29 +31,32 @@ const Form = ({ onSuccess, onError }) => {
     },
     [onSuccess, onError]
   );
+
   return (
-    <form onSubmit={sendContact}>
+    <form onSubmit={sendContact} ref={formRef}>
       <div className="row">
         <div className="col">
-          <Field placeholder="" label="Nom" />
-          <Field placeholder="" label="Prénom" />
+          <Field placeholder="" label="Nom" required /> {/* Champ requis */}
+          <Field placeholder="" label="Prénom" required /> {/* Champ requis */}
           <Select
             selection={["Personel", "Entreprise"]}
             onChange={() => null}
             label="Personel / Entreprise"
             type="large"
             titleEmpty
+            required // Sélection requise
           />
-          <Field placeholder="" label="Email" />
+          <Field placeholder="" label="Email" required /> {/* Champ requis */}
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? "En cours" : "Envoyer"}
           </Button>
         </div>
         <div className="col">
           <Field
-            placeholder="message"
+            placeholder="Message"
             label="Message"
             type={FIELD_TYPES.TEXTAREA}
+            required // Champ requis
           />
         </div>
       </div>
@@ -56,11 +67,11 @@ const Form = ({ onSuccess, onError }) => {
 Form.propTypes = {
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
-}
+};
 
 Form.defaultProps = {
   onError: () => null,
   onSuccess: () => null,
-}
+};
 
 export default Form;

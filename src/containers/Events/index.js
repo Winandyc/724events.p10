@@ -16,20 +16,30 @@ const EventList = () => {
   const filteredEvents = (
     (!type
       ? data?.events
-      : data?.events) || []
-  ).filter((event, index) => {
-    if (
-      (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
-    ) {
-      return true;
-    }
-    return false;
+      : data?.events.filter((elem) => elem.type === type)) || []
+  ).filter((event, index) => { // filtre les événements en fonction de la catégorie selectionnée
+    const startIndex = (currentPage - 1) * PER_PAGE;
+    const endIndex = PER_PAGE * currentPage;
+    const isWithinPageRange = startIndex <= index && index < endIndex;
+    return isWithinPageRange;
   });
+
+  /* const typeFilter = !type || event.type === type;
+  if (
+    typeFilter &&
+    (currentPage - 1) * PER_PAGE <= index &&
+    PER_PAGE * currentPage > index
+  ) {
+    return true;
+  }
+  return false;
+}); */
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
   };
+
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   const typeList = new Set(data?.events.map((event) => event.type));
   return (

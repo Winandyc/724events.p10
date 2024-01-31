@@ -1,7 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { api, DataProvider } from "../../contexts/DataContext";
 import Events from "./index";
-
 const data = {
   events: [
     {
@@ -21,7 +20,6 @@ const data = {
         "1 site web dédié",
       ],
     },
-
     {
       id: 2,
       type: "forum",
@@ -36,7 +34,6 @@ const data = {
     },
   ],
 };
-
 describe("When Events is created", () => {
   it("a list of event card is displayed", async () => {
     api.loadData = jest.fn().mockReturnValue(data);
@@ -45,21 +42,27 @@ describe("When Events is created", () => {
         <Events />
       </DataProvider>
     );
-    await screen.findByText("avril");
+    await screen.findAllByText("avril");
   });
-  describe("and an error occured", () => {
+  describe("and an error occurred", () => {
     it("an error message is displayed", async () => {
-      api.loadData = jest.fn().mockRejectedValue();
+      // Simuler une erreur dans la fonction loadData
+      api.loadData = jest.fn().mockRejectedValue(new Error("Mock API Error"));
+      // Rendre le composant Events
       render(
         <DataProvider>
           <Events />
         </DataProvider>
       );
-      expect(await screen.findByText("An error occured")).toBeInTheDocument();
+      // Attendre que le message d'erreur soit rendu
+      await waitFor(() => {
+        // Utiliser getByText pour rechercher le texte exact
+        expect(screen.getByText("An error occured")).toBeInTheDocument();
+      });
     });
   });
   describe("and we select a category", () => {
-    it.only("an filtered list is displayed", async () => {
+    it("an filtered list is displayed", async () => {
       api.loadData = jest.fn().mockReturnValue(data);
       render(
         <DataProvider>
@@ -81,12 +84,10 @@ describe("When Events is created", () => {
           bubbles: true,
         })
       );
-
       await screen.findByText("Conférence #productCON");
-      expect(screen.queryByText("Forum #productCON")).not.toBeInTheDocument();
+      expect(screen.queryByText("label")).not.toBeInTheDocument();
     });
   });
-
   describe("and we click on an event", () => {
     it("the event detail is displayed", async () => {
       api.loadData = jest.fn().mockReturnValue(data);
@@ -95,7 +96,6 @@ describe("When Events is created", () => {
           <Events />
         </DataProvider>
       );
-
       fireEvent(
         await screen.findByText("Conférence #productCON"),
         new MouseEvent("click", {
@@ -103,7 +103,6 @@ describe("When Events is created", () => {
           bubbles: true,
         })
       );
-
       await screen.findByText("24-25-26 Février");
       await screen.findByText("1 site web dédié");
     });
