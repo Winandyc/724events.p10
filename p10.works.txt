@@ -1,9 +1,9 @@
-p.10 à retravailler :
+p.10 works :
 
--Components : "index.js" de "EventCard" --> OK
+-Components : "index.js" de "EventCard"
 
--Containers : "index.js" de "Events" --> OK - "index.js" de "Form" --> OK - "index.js" de "Slider" --> OK
+-Containers : "index.js" de "Events" - "index.js" de "Form" - "index.js" de "Slider"
 
--Helpers\Date : "index.js" --> OK
+-Helpers\Date : "index.js"
 
--Pages\Home : "index.js" (col presta) --> OK
+-Pages\Home : "index.js" (col presta)

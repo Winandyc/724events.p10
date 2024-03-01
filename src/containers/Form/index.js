@@ -4,25 +4,21 @@ import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
 
-const mockContactApi = () =>
-  new Promise((resolve) => {
-    setTimeout(resolve, 900);
-  });
+const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 900); }) // 1000 --> 900
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
-  const formRef = useRef(null);
+  const formRef = useRef(null); // utilisation de la fonction useRef(null) pour créer une référence à l'élément <form> du formulaire
 
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
       setSending(true);
-
       // We try to call mockContactApi
       try {
         await mockContactApi();
         setSending(false);
-        onSuccess();
+        onSuccess(); // Ajout de onSuccess pour avoir le message de confirmation
         formRef.current.reset(); // Réinitialiser le formulaire
       } catch (err) {
         setSending(false);
@@ -33,10 +29,10 @@ const Form = ({ onSuccess, onError }) => {
   );
 
   return (
-    <form onSubmit={sendContact} ref={formRef}>
+    <form onSubmit={sendContact} ref={formRef}> {/* appel de la référence formRef */}
       <div className="row">
         <div className="col">
-          <Field placeholder="" label="Nom" required /> {/* Champ requis */}
+          <Field placeholder="" label="Nom" required /> {/* champ requis */}
           <Field placeholder="" label="Prénom" required /> {/* Champ requis */}
           <Select
             selection={["Personel", "Entreprise"]}
@@ -44,7 +40,7 @@ const Form = ({ onSuccess, onError }) => {
             label="Personel / Entreprise"
             type="large"
             titleEmpty
-            required // Sélection requise
+            required // sélection requise
           />
           <Field placeholder="" label="Email" required /> {/* Champ requis */}
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
@@ -53,7 +49,7 @@ const Form = ({ onSuccess, onError }) => {
         </div>
         <div className="col">
           <Field
-            placeholder="Message"
+            placeholder="message"
             label="Message"
             type={FIELD_TYPES.TEXTAREA}
             required // Champ requis
@@ -63,15 +59,12 @@ const Form = ({ onSuccess, onError }) => {
     </form>
   );
 };
-
 Form.propTypes = {
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
-};
-
+}
 Form.defaultProps = {
   onError: () => null,
   onSuccess: () => null,
-};
-
+}
 export default Form;

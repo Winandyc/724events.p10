@@ -117,18 +117,20 @@ const Page = () => {
     </main>
     <footer className="row">
 
-      <div className="col presta">
+      <div className="col presta"> {/* Modifications ici */}
         <h3>Notre dernière prestation</h3>
-        {last && (
+        {last && ( // vérification de last avant de rendre le contenu. S'il existe, alors le contenu à l'intérieur des () est rendu
           <Modal Content={<ModalEvent event={last} />}>
-            {({ setIsOpened }) => (
+            {/* Ajout d'une modale qui enveloppe le contenu de EventCard. // prop Content qui affiche le composant ModalEvent à l'ouverture de la modale */}
+            {/* Lorsque la modale est ouverte, le contenu affiché à l'intérieur sera le contenu du composant ModalEvent avec les détails de l'événement last (= l'événement actuellement sélectionné) */}
+            {({ setIsOpened }) => ( // fonction pour ouvrir la modale
               <EventCard
-                onClick={() => setIsOpened(true)}
+                onClick={() => setIsOpened(true)} // ajout de onClick qui appelle la fonction setIsOpened
                 imageSrc={last.cover}
                 title={last.title}
                 date={new Date(last.date)}
                 label="boom"
-                className="EventCard EventCard--small"
+                className="EventCard EventCard--small" // ajout des class pour l'attribution du CSS de ces 2 dernières
               />
             )}
           </Modal>
