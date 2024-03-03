@@ -1,9 +1,36 @@
 p.10 works :
 
--Components : "index.js" de "EventCard"
+-Components : EventCard--> index.js
+-Containers : Events--> index.js ; Form--> index.js ; Slider--> index.js
+-Helpers\Date : index.js
+-Pages\Home : index.js--> div "col presta"
 
--Containers : "index.js" de "Events" - "index.js" de "Form" - "index.js" de "Slider"
+________________________________________________________________________________________________________________________
 
--Helpers\Date : "index.js"
+Méthode de débogage :
+1- Utilisation des tests unitaires lancés avec "yarn test --watch".
+2- Identification des erreurs ou des échecs de test pour identifier les parties du code qui ne fonctionnaient pas correctement, par moi même.
+3- Utilisation de techniques de débogage comme l'inspection des variables via l'utilisation de "console.log", des outils mis à ma disposition
+sur mon navigateur : ma console (f12) - React Developer Tools.
+4- Si compliqué par moi même, utilisation de l'IA.
 
--Pages\Home : "index.js" (col presta)
+Choix de l'implémentation du code buggé :
+Travail avec l'IA et des questions précises du genre : "J'ai un soucis sur telle partie de mon code. Ca agit comme ça alors que je voudrais que
+ça agisse comme ça... Quelle est selon toi la meilleure correction possible à apporter pour obtenir le résultat voulu, tout en conservant
+les bonnes pratiques de développement (=un code clair et de qualité) ?".
+
+________________________________________________________________________________________________________________________
+
+Components--> Button--> index.test.js : Explication et exemple de tests unitaires. Les autres fichiers "index.test.js" suivent à peu près le même schéma.
+
+________________________________________________________________________________________________________________________
+
+-Test unitaire : C'est comme vérifier chaque petite pièce d'un puzzle pour voir si elle fonctionne bien toute seule. On teste une petite partie du code,
+comme une fonction ou une méthode, pour s'assurer qu'elle fait ce qu'elle est censée faire.
+
+-Test fonctionnel : C'est comme jouer à un jeu vidéo pour voir si tout le jeu fonctionne bien. On teste l'ensemble de l'application comme un utilisateur
+le ferait, en vérifiant si toutes les fonctionnalités marchent correctement ensemble.
+
+Résumé :
+Les tests unitaires vérifient de petites parties du code, tandis que les tests fonctionnels vérifient l'application dans son ensemble comme si un
+utilisateur l'utilisait.
