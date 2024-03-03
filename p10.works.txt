@@ -1,6 +1,6 @@
 p.10 works :
 
--Components : EventCard--> index.js
+-Components : EventCard--> index.js ; Select--> index.js
 -Containers : Events--> index.js ; Form--> index.js ; Slider--> index.js
 -Helpers\Date : index.js
 -Pages\Home : index.js--> div "col presta"
@@ -11,7 +11,7 @@ Méthode de débogage :
 1- Utilisation des tests unitaires lancés avec "yarn test --watch".
 2- Identification des erreurs ou des échecs de test pour identifier les parties du code qui ne fonctionnaient pas correctement, par moi même.
 3- Utilisation de techniques de débogage comme l'inspection des variables via l'utilisation de "console.log", des outils mis à ma disposition
-sur mon navigateur : ma console (f12) - React Developer Tools.
+sur mon navigateur : ma console (f12).
 4- Si compliqué par moi même, utilisation de l'IA.
 
 Choix de l'implémentation du code buggé :

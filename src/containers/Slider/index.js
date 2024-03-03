@@ -9,27 +9,39 @@ const Slider = () => {
   const [index, setIndex] = useState(0);
 
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1 // changement "<" par ">" pour ordre decroissant
+    new Date(evtB.date) < new Date(evtA.date) ? -1 : 1 // Inversion evtB < evtA pour afficher les événements du plus ancien au plus récent
   );
 
-
-  const nextCard = () => {
-    setTimeout(
-      () => setIndex(index + 1 < byDateDesc?.length ? index + 1 : 0),
-      5000
-    );
-  };
-
   useEffect(() => {
-    nextCard();
-  });
+    // Deplacement de la logique de transition automatique (fonction 'nextCard')
+    // Stoke l'identifiant du délai d'éxécution
+    const timeOutId = setTimeout(() => {
+      setIndex((prevIndex) => (prevIndex < (byDateDesc?.length ?? 0) - 1 ? prevIndex + 1 : 0));
+    }, 5000);
+    //  Je vérifie si l'index actuel est inférieur au nombre total d'événements -1. Si c'est le cas, je passe à l'événement suivant
+    // (rajout de -1 pour éviter l'affichage d'une image blanche)
+    return () => clearTimeout(timeOutId);
+    // Nettoyage du timer lorsqu'un composant est démonté ou que l'index change
 
+    // Effet déclenché par les changements de l'index et des données reçues
+  }, [index, byDateDesc]);
+
+  // Fonction pour changer manuellement l'indice en sélectionnant un input radio
+  const handleChangeRadio = (radioIdx) => {
+    // Mise à jour de l'index en fonction de l'indice de l'inputRadio
+    setIndex(radioIdx);
+    // Annulation du timer de transition automatique
+    clearTimeout();
+  };
 
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
+        // Clé unique pour le titre
         <div key={event.title}>
           <div
+            // Clé unique pour l'id de l'événement
+            key={event.id}
             className={`SlideCard SlideCard--${index === idx ? "display" : "hide"
               }`}
           >
@@ -41,18 +53,17 @@ const Slider = () => {
                 <div>{getMonth(new Date(event.date))}</div>
               </div>
             </div>
-
-
           </div>
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">
-              {byDateDesc?.map((_, radioIdx) => (
+              {byDateDesc.map((e, radioIdx) => (
                 <input
-                  key={`${_.title}`}
+                  key={`${e.title}`}
                   type="radio"
                   name="radio-button"
-                  checked={index === radioIdx}
-                  onChange={() => null}
+                  checked={radioIdx === index}
+                  // Selection manuel de l'input
+                  onChange={() => handleChangeRadio(radioIdx)}
                 />
               ))}
             </div>
