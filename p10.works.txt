@@ -3,6 +3,7 @@ p.10 works :
 -Components : EventCard--> index.js ; Select--> index.js
 -Containers : Events--> index.js ; Form--> index.js ; Slider--> index.js
 -Helpers\Date : index.js
+-Contexts\DataContext : index.js
 -Pages\Home : index.js--> div "col presta"
 
 ________________________________________________________________________________________________________________________
@@ -26,11 +27,25 @@ Components--> Button--> index.test.js : Explication et exemple de tests unitaire
 ________________________________________________________________________________________________________________________
 
 -Test unitaire : C'est comme vérifier chaque petite pièce d'un puzzle pour voir si elle fonctionne bien toute seule. On teste une petite partie du code,
-comme une fonction ou une méthode, pour s'assurer qu'elle fait ce qu'elle est censée faire.
+comme une fonction ou une méthode, pour s'assurer qu'elle fait ce qu'elle est censée faire (= une unité de code => unitaire).
 
--Test fonctionnel : C'est comme jouer à un jeu vidéo pour voir si tout le jeu fonctionne bien. On teste l'ensemble de l'application comme un utilisateur
-le ferait, en vérifiant si toutes les fonctionnalités marchent correctement ensemble.
+-Test fonctionnel : C'est comme jouer à un jeu vidéo et voir si une fonctionnalité précise marche bien (exemple : sauvegarder sa partie).
 
 Résumé :
-Les tests unitaires vérifient de petites parties du code, tandis que les tests fonctionnels vérifient l'application dans son ensemble comme si un
-utilisateur l'utilisait.
+Les tests unitaires vérifient de petites parties du code, tandis que les tests fonctionnels vérifient une fonctionnalité précise dans son ensemble.
+
+
+Helpers\Date : index.test.js--> Retravaillé
+
+________________________________________________________________________________________________________________________
+
+Condition ternaire :
+
+Condition ==> " ? " si c'est vrai - " : " si c'est faux
+________________________________________________________________________________________________________________________
+
+Pour moi :
+
+?? = si le bloc juste avant est : null - undefined - 0 - string vide (donc juste "") - false
+Exemple :
+data?.events?? []

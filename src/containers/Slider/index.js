@@ -8,25 +8,25 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
 
-  const byDateDesc = data?.focus.sort((evtA, evtB) =>
+  const byDateDesc = data?.focus.sort((evtA, evtB) => // pour moi (sort = trier)
     new Date(evtB.date) < new Date(evtA.date) ? -1 : 1 // Inversion evtB < evtA pour afficher les événements du plus ancien au plus récent
   );
 
   useEffect(() => {
     // Deplacement de la logique de transition automatique (fonction 'nextCard')
-    // Stoke l'identifiant du délai d'éxécution
+    // Stocke l'identifiant du délai d'éxécution
     const timeOutId = setTimeout(() => {
       setIndex((prevIndex) => (prevIndex < (byDateDesc?.length ?? 0) - 1 ? prevIndex + 1 : 0));
     }, 5000);
     //  Je vérifie si l'index actuel est inférieur au nombre total d'événements -1. Si c'est le cas, je passe à l'événement suivant
     // (rajout de -1 pour éviter l'affichage d'une image blanche)
     return () => clearTimeout(timeOutId);
-    // Nettoyage du timer lorsqu'un composant est démonté ou que l'index change
+    // Nettoyage du timer lorsque l'index change
 
     // Effet déclenché par les changements de l'index et des données reçues
   }, [index, byDateDesc]);
 
-  // Fonction pour changer manuellement l'indice en sélectionnant un input radio
+  // Fonction pour changer manuellement l'indice en sélectionnant un input radio (utilisée plus bas)
   const handleChangeRadio = (radioIdx) => {
     // Mise à jour de l'index en fonction de l'indice de l'inputRadio
     setIndex(radioIdx);
@@ -62,7 +62,7 @@ const Slider = () => {
                   type="radio"
                   name="radio-button"
                   checked={radioIdx === index}
-                  // Selection manuel de l'input
+                  // Selection manuelle de l'input
                   onChange={() => handleChangeRadio(radioIdx)}
                 />
               ))}

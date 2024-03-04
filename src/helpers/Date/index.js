@@ -14,4 +14,5 @@ export const MONTHS = {
 };
 
 export const getMonth = (date) => MONTHS[date.getMonth() + 1];
+// getMonth de base renvoie le numéro du mois actuel -1
 // ajout de +1 pour afficher correctement la date

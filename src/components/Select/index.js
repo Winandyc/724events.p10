@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import PropTypes from "prop-types";
+
 import "./style.scss";
 
 const Select = ({
@@ -19,8 +20,7 @@ const Select = ({
     // Passe la nouvelle valeur
     onChange(newValue);
     setValue(newValue);
-    // Passe à false pour fermer le menu déroulant
-    setCollapsed(!collapsed);
+    setCollapsed(!collapsed); // Passe à false pour fermer le menu déroulant
   };
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
@@ -81,6 +81,7 @@ const Arrow = () => (
     />
   </svg>
 );
+
 Select.propTypes = {
   selection: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func,
@@ -89,6 +90,7 @@ Select.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
 }
+
 Select.defaultProps = {
   onChange: () => null,
   titleEmpty: false,
@@ -96,4 +98,5 @@ Select.defaultProps = {
   type: "normal",
   name: "select",
 }
+
 export default Select;
